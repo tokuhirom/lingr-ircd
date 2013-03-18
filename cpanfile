@@ -3,6 +3,7 @@ requires 'parent'                        => '0';
 requires 'AnyEvent::IRC::Server';
 requires 'AnyEvent';
 requires 'AnyEvent::Lingr';
+requires 'Mouse' => 1.05;
 # requires 'Plack'                         => '0.9949';
 
 on 'configure' => sub {
