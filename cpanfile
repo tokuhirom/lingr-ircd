@@ -1,5 +1,8 @@
 # requires 'Exporter'                      => '0';
 requires 'parent'                        => '0';
+requires 'AnyEvent::IRC::Server';
+requires 'AnyEvent';
+requires 'AnyEvent::Lingr';
 # requires 'Plack'                         => '0.9949';
 
 on 'configure' => sub {
