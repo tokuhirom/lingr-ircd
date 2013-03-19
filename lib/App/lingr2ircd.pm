@@ -138,7 +138,9 @@ sub setup_lingr {
                 if ($msg->{speaker_id} eq $self->lingr_user) {
                     print "It's me.\n";
                 } else {
-                    $self->ircd->daemon_cmd_privmsg("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($msg->{text}));
+                    # $self->ircd->daemon_cmd_join("$msg->{speaker_id}", "#$msg->{room}");
+                    my $meth = $msg->{type} eq 'user' ? 'daemon_cmd_privmsg' : 'daemon_cmd_notice';
+                    $self->ircd->$meth("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($msg->{text}));
                 }
             }
         }
