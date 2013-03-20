@@ -127,6 +127,7 @@ sub setup_lingr {
     );
 
     # event handler
+    my %topic_set;
     $lingr->on_event(
         sub {
             my ($event) = @_;
@@ -139,8 +140,10 @@ sub setup_lingr {
                     print "It's me.\n";
                 } else {
                     # $self->ircd->daemon_cmd_join("$msg->{speaker_id}", "#$msg->{room}");
-                    my $meth = $msg->{type} eq 'user' ? 'daemon_cmd_privmsg' : 'daemon_cmd_notice';
-                    $self->ircd->$meth("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($msg->{text}));
+                    unless ($topic_set{$msg->{room}}++) {
+                        $self->ircd->daemon_cmd_topic("\@$msg->{speaker_id}", '#' . $msg->{room}, "http://lingr.com/room/$msg->{room}");
+                    }
+                    $self->ircd->daemon_cmd_privmsg("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($msg->{text}));
                 }
             }
         }
