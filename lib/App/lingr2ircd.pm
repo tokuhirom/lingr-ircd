@@ -134,16 +134,20 @@ sub setup_lingr {
 
             # print message
             if ( my $msg = $event->{message} ) {
-                print sprintf "[%s] %s: %s\n", $msg->{room}, $msg->{nickname}, $msg->{text};
+                print sprintf "[%s] %s(%s): %s\n", $msg->{room}, $msg->{nickname}, $msg->{type}, $msg->{text};
 
                 if ($msg->{speaker_id} eq $self->lingr_user) {
                     print "It's me.\n";
                 } else {
                     # $self->ircd->daemon_cmd_join("$msg->{speaker_id}", "#$msg->{room}");
+                    # use Data::Dumper; warn Dumper($msg);
                     unless ($topic_set{$msg->{room}}++) {
                         $self->ircd->daemon_cmd_topic("\@$msg->{speaker_id}", '#' . $msg->{room}, "http://lingr.com/room/$msg->{room}");
                     }
-                    $self->ircd->daemon_cmd_privmsg("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($msg->{text}));
+                    my $meth = $msg->{type} eq 'bot' ? 'daemon_cmd_notice' : 'daemon_cmd_privmsg';
+                    for my $text (split /\n/, $msg->{text}) {
+                        $self->ircd->$meth("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($text));
+                    }
                 }
             }
         }
