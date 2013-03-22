@@ -75,7 +75,21 @@ sub setup_ircd {
             if ($self->lingr) {
                 my $room = $chan;
                 $room =~ s!^#!!;
+                $text =~ s!\A\x01ACTION (.+)\x01\z!/me $1!;
                 $self->lingr->say($room, $text, sub {
+                    print "Post okay\n";
+                });
+            } else {
+                warn "Lingr connection is not ready yet.\n";
+            }
+        },
+        daemon_notice => sub {
+            my ($irc, $nick, $chan, $text) = @_;
+            print decode_utf8("$nick, $chan, $text\n");
+            if ($self->lingr) {
+                my $room = $chan;
+                $room =~ s!^#!!;
+                $self->lingr->say($room, "($text)", sub {
                     print "Post okay\n";
                 });
             } else {
