@@ -1,0 +1,5 @@
+ircd_host = "127.0.0.1"
+ircd_port = 27777
+lingr_user = "your_username_on_lingr"
+lingr_password = "your_password_on_lingr"
+lingr_api_key = "your_api_key_on_lingr" # You can get this on: http://lingr.com/developer
