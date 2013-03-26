@@ -7,19 +7,30 @@ use lib "$FindBin::Bin/../lib/";
 use Getopt::Long;
 use App::lingr2ircd;
 use AE;
+use TOML qw(from_toml);
 
 binmode *STDOUT, ':utf8';
 binmode *STDERR, ':utf8';
 
-my %opts;
+my (%opts, $config);
 
 GetOptions(
+    'c=s' => \$config,
     'ircd_host=s' => \$opts{ircd_host},
     'ircd_port=i' => \$opts{ircd_port},
     'lingr_user=s' => \$opts{lingr_user},
     'lingr_password=s' => \$opts{lingr_password},
     'lingr_api_key=s' => \$opts{lingr_api_key},
 );
+
+if ($config) {
+    open my $f, '<', $config or die "Can't open config file: $config";
+    my $content = do { local $/; <$f> };
+    close $f;
+    my ($data, $err) = from_toml($content);
+    die "Can't parse config file: $err" if $err;
+    %opts = (%opts, %{$data});
+}
 App::lingr2ircd->new(\%opts)->run;
 
 AE::cv()->recv;
