@@ -156,11 +156,11 @@ sub setup_lingr {
                     # $self->ircd->daemon_cmd_join("$msg->{speaker_id}", "#$msg->{room}");
                     # use Data::Dumper; warn Dumper($msg);
                     unless ($topic_set{$msg->{room}}++) {
-                        $self->ircd->daemon_cmd_topic("\@$msg->{speaker_id}", '#' . $msg->{room}, "http://lingr.com/room/$msg->{room}");
+                        $self->ircd->daemon_cmd_topic("$msg->{speaker_id}", '#' . $msg->{room}, "http://lingr.com/room/$msg->{room}");
                     }
                     my $meth = $msg->{type} eq 'bot' ? 'daemon_cmd_notice' : 'daemon_cmd_privmsg';
                     for my $text (split /\n/, $msg->{text}) {
-                        $self->ircd->$meth("\@$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($text));
+                        $self->ircd->$meth("$msg->{speaker_id}", '#' . $msg->{room}, encode_utf8($text));
                     }
                 }
             }
