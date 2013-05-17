@@ -29,11 +29,7 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "CPAN::Meta::Prereqs" : "0",
-            "Module::Build" : "0.40",
-            "Module::Build::Pluggable" : "0",
-            "Module::Build::Pluggable::CPANfile" : "0",
-            "Module::Build::Pluggable::GithubMeta" : "0",
-            "TOML" : "0"
+            "Module::Build" : "0.40"
          }
       },
       "develop" : {
@@ -50,6 +46,7 @@
             "AnyEvent::IRC::Server" : "0",
             "AnyEvent::Lingr" : "0",
             "Mouse" : "1.05",
+            "TOML" : "0",
             "parent" : "0",
             "perl" : "5.008005"
          }

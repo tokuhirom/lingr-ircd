@@ -5,13 +5,10 @@ requires 'AnyEvent';
 requires 'AnyEvent::Lingr';
 requires 'Mouse' => 1.05;
 # requires 'Plack'                         => '0.9949';
+requires 'TOML';
 
 on 'configure' => sub {
     requires 'Module::Build' => '0.40';
-    requires 'Module::Build::Pluggable';
-    requires 'Module::Build::Pluggable::CPANfile';
-    requires 'Module::Build::Pluggable::GithubMeta';
-    requires 'TOML';
 };
 
 on 'test' => sub {
