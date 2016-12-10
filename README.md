@@ -1,5 +1,7 @@
 # NAME
 
+*DEPRECATED*
+
 App::lingr2ircd - IRCD gateway for lingr
 
 # DESCRIPTION
